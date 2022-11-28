@@ -12,5 +12,6 @@ int main(int argc, char *argv[])
     system.nodes = &nodeList;
     system.elements = &elementList;
     system.SetParents();
+    system.CreateOHQSingleLayer("/home/arash/Dropbox/Drywell Project/Coordinates/model.ohq");
     return a.exec();
 }

@@ -26,6 +26,9 @@ public:
     vector<double> Centroid1();
     vector<double> Centroid2();
     vector<Node*> Nodes();
+    vector<int> FindAdjacentElements();
+    bool IsAdjacent(int element_number);
+    ElementList* AllElements() {return elements;}
 private:
     ElementList* elements = nullptr;
 };

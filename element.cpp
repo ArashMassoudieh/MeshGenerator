@@ -76,7 +76,7 @@ vector<Node*> Element::Nodes()
 {
     vector<Node*> nodes;
     for (int i=0; i<size(); i++)
-        nodes.push_back(&GetNodeElements()->nodes->at(i));
+        nodes.push_back(&GetNodeElements()->nodes->at(at(i)));
 
     return nodes;
 }
@@ -109,7 +109,6 @@ vector<double> Element::Centroid1()
 
     if (vertexes.size()==4)
     {
-        vector<double> cent(2);
         cent.push_back((vertexes[0]->X()+vertexes[1]->X()+vertexes[2]->X())/3.0);
         cent.push_back((vertexes[0]->Y()+vertexes[1]->Y()+vertexes[2]->Y())/3.0);
     }
@@ -123,9 +122,37 @@ vector<double> Element::Centroid2()
 
     if (vertexes.size()==4)
     {
-        vector<double> cent(2);
         cent.push_back((vertexes[0]->X()+vertexes[3]->X()+vertexes[2]->X())/3.0);
         cent.push_back((vertexes[0]->Y()+vertexes[3]->Y()+vertexes[2]->Y())/3.0);
     }
     return cent;
+}
+
+bool Element::IsAdjacent(int element_number)
+{
+    vector<Node*> vertexes = Nodes();
+    vector<Node*> othervertexes = AllElements()->at(element_number).Nodes();
+    int count_commons = 0;
+    for (int i=0; i<vertexes.size(); i++)
+        for (int j=0; j<othervertexes.size(); j++)
+            if (vertexes[i]==othervertexes[j])
+                count_commons += 1;
+
+    if (count_commons==2)
+        return true;
+    else
+        return false;
+}
+
+vector<int> Element::FindAdjacentElements()
+{
+    vector<int> out;
+    for (int i=0; i<AllElements()->size(); i++)
+    {
+        if (IsAdjacent(i) && AllElements()->at(i)!=*this)
+        {
+            out.push_back(i);
+        }
+    }
+    return out;
 }

@@ -11,6 +11,7 @@ public:
     NodeList *nodes;
     ElementList *elements;
     void SetParents();
+    bool CreateOHQSingleLayer(const QString &filename);
 };
 
 #endif // NODESELEMENTS_H
