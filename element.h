@@ -29,6 +29,8 @@ public:
     vector<int> FindAdjacentElements();
     bool IsAdjacent(int element_number);
     ElementList* AllElements() {return elements;}
+    double InterfaceLength(int element_number);
+    double CentroidDist(int element_number);
 private:
     ElementList* elements = nullptr;
 };

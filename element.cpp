@@ -144,6 +144,38 @@ bool Element::IsAdjacent(int element_number)
         return false;
 }
 
+double Element::InterfaceLength(int element_number)
+{
+    vector<Node*> vertexes = Nodes();
+    vector<Node*> othervertexes = AllElements()->at(element_number).Nodes();
+    int count_commons = 0;
+    vector<Node*> common_nodes;
+    for (int i=0; i<vertexes.size(); i++)
+        for (int j=0; j<othervertexes.size(); j++)
+            if (vertexes[i]==othervertexes[j])
+            {   count_commons += 1;
+                common_nodes.push_back(vertexes[i]);
+            }
+
+    if (count_commons==2)
+        return pow(pow(common_nodes[0]->X()-common_nodes[1]->X(),2)+pow(common_nodes[0]->Y()-common_nodes[1]->Y(),2),0.5);
+    else
+        return 0;
+}
+
+double Element::CentroidDist(int element_number)
+{
+    if (IsAdjacent(element_number))
+    {
+        vector<double> centroid1 = Centroid();
+        vector<double> centroid2 = AllElements()->at(element_number).Centroid();
+        return pow(pow(centroid1[0]-centroid2[0],2)+pow(centroid1[1]-centroid2[1],2),0.5);
+    }
+    else
+        return 0;
+}
+
+
 vector<int> Element::FindAdjacentElements()
 {
     vector<int> out;
